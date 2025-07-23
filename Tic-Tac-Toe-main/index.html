@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>✨ Tic Tac Toe ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Nunito', sans-serif;
+      text-align: center;
+      background: linear-gradient(to right, #fceff9, #e3fdfd);
+      color: #555;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff66b2;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    #game {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 10px;
+      justify-content: center;
+      margin: 30px auto;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background-color: #fff0f5;
+      border: 2px solid #ffb6c1;
+      border-radius: 15px;
+      font-size: 48px;
+      color: #ff66b2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    .cell:hover {
+      background-color: #ffe6f2;
+    }
+
+    #status {
+      font-size: 20px;
+      margin: 20px 0;
+      color: #aa00aa;
+    }
+
+    #restart {
+      padding: 10px 25px;
+      font-size: 16px;
+      background-color: #ffc0cb;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.2s;
+    }
+
+    #restart:hover {
+      background-color: #ff99aa;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tic Tac Toe</h1>
+  <div id="game">
+    <div class="cell" data-index="0"></div>
+    <div class="cell" data-index="1"></div>
+    <div class="cell" data-index="2"></div>
+    <div class="cell" data-index="3"></div>
+    <div class="cell" data-index="4"></div>
+    <div class="cell" data-index="5"></div>
+    <div class="cell" data-index="6"></div>
+    <div class="cell" data-index="7"></div>
+    <div class="cell" data-index="8"></div>
+  </div>
+  <p id="status">🌸 Player X's Turn 🌸</p>
+  <button id="restart">🔁 Restart Game</button>
+
+  <script>
+    const cells = document.querySelectorAll('.cell');
+    const statusText = document.getElementById('status');
+    const restartBtn = document.getElementById('restart');
+
+    let currentPlayer = 'X';
+    let board = Array(9).fill('');
+    let isGameActive = true;
+
+    const winningCombos = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+
+    function handleClick(e) {
+      const index = e.target.dataset.index;
+
+      if (board[index] !== '' || !isGameActive) return;
+
+      board[index] = currentPlayer;
+      e.target.textContent = currentPlayer;
+
+      if (checkWinner()) {
+        statusText.textContent = `🎉 Player ${currentPlayer} Wins! 🎉`;
+        isGameActive = false;
+      } else if (!board.includes('')) {
+        statusText.textContent = "😅 It's a Draw!";
+        isGameActive = false;
+      } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        statusText.textContent = `🌸 Player ${currentPlayer}'s Turn 🌸`;
+      }
+    }
+
+    function checkWinner() {
+      return winningCombos.some(combo => {
+        const [a, b, c] = combo;
+        return board[a] && board[a] === board[b] && board[a] === board[c];
+      });
+    }
+
+    function restartGame() {
+      board.fill('');
+      cells.forEach(cell => (cell.textContent = ''));
+      currentPlayer = 'X';
+      isGameActive = true;
+      statusText.textContent = "🌸 Player X's Turn 🌸";
+    }
+
+    cells.forEach(cell => cell.addEventListener('click', handleClick));
+    restartBtn.addEventListener('click', restartGame);
+  </script>
+</body>
+</html>
