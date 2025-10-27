@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personal Info Form</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1>Enter Your Personal Information</h1>
+    
+    <input type="text" id="firstName" placeholder="First Name" />
+    <input type="text" id="lastName" placeholder="Last Name" />
+    <input type="number" id="age" placeholder="Age" />
+    <input type="text" id="occupation" placeholder="Occupation" />
+    <input type="text" id="hobbies" placeholder="Hobbies (comma separated)" />
+
+    <button onclick="displayPersonalInfo()">Submit</button>
+
+    
+    <div class="output">
+      <h2>Personal Information</h2>
+      <p id="outputName"></p>
+      <p id="outputAge"></p>
+      <p id="outputOccupation"></p>
+      <p id="outputHobbies"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
